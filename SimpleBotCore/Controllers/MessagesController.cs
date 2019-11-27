@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using SimpleBotCore.Logic;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using SimpleBotCore.Services;
 
 namespace SimpleBotCore.Controllers
 {
@@ -13,10 +16,14 @@ namespace SimpleBotCore.Controllers
     public class MessagesController : Controller
     {
         SimpleBotUser _bot = new SimpleBotUser();
-
-        public MessagesController(SimpleBotUser bot)
+        private readonly ChatService service;
+        public MessagesController(SimpleBotUser bot,
+                                  ChatService _service)
         {
             this._bot = bot;
+            service = _service;
+
+
         }
 
         [HttpGet]
@@ -46,6 +53,9 @@ namespace SimpleBotCore.Controllers
             string userFromName = activity.From.Name;
 
             var message = new SimpleMessage(userFromId, userFromName, text);
+
+            service.Insert(new Model.Chat { conversa = text, DataConversa= System.DateTime.Now});
+
 
             string response = _bot.Reply(message);
 

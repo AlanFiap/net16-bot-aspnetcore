@@ -7,7 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Extensions.Configuration;
 namespace SimpleBotCore
 {
     public class Program
@@ -15,6 +15,11 @@ namespace SimpleBotCore
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
+
+            // instancia Mongo
+            
+
+
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
